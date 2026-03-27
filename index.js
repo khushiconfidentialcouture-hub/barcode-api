@@ -77,7 +77,7 @@ function generateHTML(items) {
     html += `
       <div class="label">
         <img src="https://barcode.tec-it.com/barcode.ashx?data=${data}&code=Code128">
-        <br><b>${item.presku}</b><br>${item.vendor}
+        <br><br>${item.vendor}
       </div>
     `;
   });
