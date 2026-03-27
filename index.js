@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-/* -------- TEST API -------- */
+/* -------- TEST API (optional - for checking) -------- */
 app.get("/test", (req, res) => {
   const items = [
     { presku: "SKU001", vendor: "Nike" },
@@ -23,7 +23,18 @@ app.get("/test", (req, res) => {
   res.send(generateHTML(items));
 });
 
-/* -------- MAIN API -------- */
+/* -------- MAIN API (ZOHO - GET) -------- */
+app.get("/generate-labels", (req, res) => {
+  try {
+    const data = JSON.parse(req.query.data);
+    const items = data.items || [];
+    res.send(generateHTML(items));
+  } catch (e) {
+    res.send("Invalid data");
+  }
+});
+
+/* -------- MAIN API (ZOHO - POST optional) -------- */
 app.post("/generate-labels", (req, res) => {
   const items = req.body.items || [];
   res.send(generateHTML(items));
@@ -47,6 +58,7 @@ function generateHTML(items) {
         border: 1px solid black;
         text-align: center;
         padding: 5mm;
+        font-family: Arial;
       }
       img {
         width: 90%;
@@ -55,11 +67,12 @@ function generateHTML(items) {
     </style>
   </head>
   <body>
+
     <div class="page">
   `;
 
   items.forEach((item) => {
-    const data = item.presku;
+    const data = item.presku; // ✅ barcode only presku
 
     html += `
       <div class="label">
@@ -71,6 +84,14 @@ function generateHTML(items) {
 
   html += `
     </div>
+
+    <script>
+      // Auto open print dialog
+      window.onload = function() {
+        window.print();
+      };
+    </script>
+
   </body>
   </html>
   `;
