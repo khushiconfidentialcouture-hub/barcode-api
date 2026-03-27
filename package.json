@@ -1,8 +1,9 @@
 {
-  "name": "barcode-pdf-api",
+  "name": "barcode-api",
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "bwip-js": "^4.5.0"
   }
 }
